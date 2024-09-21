@@ -3,102 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>易經 - I Ching</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <title>I Ching Oracle</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
+        
         body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            font-family: 'Noto Serif SC', serif;
+            background-color: #f5e6d3;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 50 L60 40 L50 30 L40 40 Z" fill="none" stroke="%23d4a76a" stroke-width="0.5"/></svg>');
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background: linear-gradient(135deg, #8E2DE2, #4A00E0);
-            font-family: 'Roboto', sans-serif;
-            color: white;
-            text-align: center;
-        }
-
-        .content {
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            flex-grow: 1;
-            padding: 40px 20px;
-            max-width: 800px;
-            margin: 0 auto;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+            box-sizing: border-box;
         }
-
+        .container {
+            background-color: #fff;
+            border: 2px solid #c62828;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
         h1 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 6rem;
+            color: #c62828;
+            font-size: 36px;
+            margin-bottom: 20px;
             font-weight: 700;
-            margin-bottom: 30px;
-            letter-spacing: 0.1em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-
-        p {
-            font-size: 1.3rem;
-            font-weight: 300;
-            line-height: 1.6;
-            margin-bottom: 40px;
-            max-width: 600px;
+        .meditation-text {
+            font-size: 18px;
+            color: #333;
+            margin: 20px 0;
+            font-style: italic;
         }
-
-        .app-store-link {
-            margin-top: 30px;
-            transition: transform 0.3s ease;
-        }
-
-        .app-store-link:hover {
-            transform: scale(1.05);
-        }
-
-        .app-store-link img {
-            max-width: 200px;
-        }
-
-        .footer {
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.1);
-        }
-
-        .footer a {
+        button {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #c62828;
+            border: none;
+            border-radius: 5px;
             color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 700;
         }
-
-        .footer a:hover {
-            color: #FFD700;
+        button:hover {
+            background-color: #8e0000;
         }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 4rem;
-            }
-
-            p {
-                font-size: 1.1rem;
-            }
+        #answer {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #c62828;
         }
+        .hexagram-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .hexagram {
+            font-size: 48px;
+            line-height: 1;
+        }
+        .changing-lines {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        .arrow {
+            font-size: 24px;
+            color: #c62828;
+        }
+        .coins-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .coin {
+            width: 80px;
+            height: 80px;
+            background-color: #ffd700;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #c62828;
+            position: relative;
+            display: none;
+        }
+        .coin::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        @keyframes flip1 {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(180deg); }
+        }
+        @keyframes flip2 {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(180deg); }
+        }
+        @keyframes flip3 {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(180deg); }
+        }
+        #coin1 { animation: flip1 1.5s linear infinite; }
+        #coin2 { animation: flip2 1.7s linear infinite; }
+        #coin3 { animation: flip3 1.9s linear infinite; }
     </style>
 </head>
 <body>
-    <div class="content">
-        <h1>易經</h1>
-        <p>Prepare to engage with the wisdom of the <b>I Ching</b> by crafting a question that is both specific and introspective, inviting deeper understanding and revelation.</p>
-        <div class="app-store-link">
-            <a href="#" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/white/en-us?size=250x83&amp;releaseDate=1324425600" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
+    <div class="container">
+        <h1>I Ching Oracle</h1>
+        <div class="meditation-text">Take a moment and meditate on your question</div>
+        <button onclick="startReading()">Give me a reading</button>
+        <div class="coins-container">
+            <div id="coin1" class="coin"></div>
+            <div id="coin2" class="coin"></div>
+            <div id="coin3" class="coin"></div>
         </div>
+        <div id="answer"></div>
     </div>
-    <div class="footer">
-        <a href="terms.html">Terms and Conditions</a>
-        <a href="privacy.html">Privacy Policy</a>
-    </div>
+
+    <script>
+        const hexagrams = [
+            "䷀", "䷁", "䷂", "䷃", "䷄", "䷅", "䷆", "䷇", "䷈", "䷉", "䷊", "䷋", "䷌", "䷍", "䷎", "䷏",
+            "䷐", "䷑", "䷒", "䷓", "䷔", "䷕", "䷖", "䷗", "䷘", "䷙", "䷚", "䷛", "䷜", "䷝", "䷞", "䷟",
+            "䷠", "䷡", "䷢", "䷣", "䷤", "䷥", "䷦", "䷧", "䷨", "䷩", "䷪", "䷫", "䷬", "䷭", "䷮", "䷯",
+            "䷰", "䷱", "䷲", "䷳", "䷴", "䷵", "䷶", "䷷", "䷸", "䷹", "䷺", "䷻", "䷼", "䷽", "䷾", "䷿"
+        ];
+
+        function startReading() {
+            document.getElementById('coin1').style.display = 'flex';
+            document.getElementById('coin2').style.display = 'flex';
+            document.getElementById('coin3').style.display = 'flex';
+            document.getElementById('answer').innerHTML = '';
+            setTimeout(generateReading, 1000);
+        }
+
+        function generateReading() {
+            document.getElementById('coin1').style.display = 'none';
+            document.getElementById('coin2').style.display = 'none';
+            document.getElementById('coin3').style.display = 'none';
+            
+            const originalHexagramIndex = Math.floor(Math.random() * 64);
+            const originalHexagram = hexagrams[originalHexagramIndex];
+            
+            // Generate changing lines
+            const changingLines = [];
+            for (let i = 0; i < 6; i++) {
+                if (Math.random() < 0.25) { // 25% chance for a changing line
+                    changingLines.push(i);
+                }
+            }
+            
+            let resultHTML = "";
+            if (changingLines.length > 0) {
+                // Calculate transformed hexagram
+                let transformedBinary = (originalHexagramIndex + 1).toString(2).padStart(6, '0');
+                changingLines.forEach(line => {
+                    transformedBinary = transformedBinary.substr(0, line) + 
+                                        (transformedBinary[line] === '0' ? '1' : '0') + 
+                                        transformedBinary.substr(line + 1);
+                });
+                const transformedHexagramIndex = parseInt(transformedBinary, 2) - 1;
+                const transformedHexagram = hexagrams[transformedHexagramIndex];
+
+                resultHTML = `
+                    <div class="hexagram-container">
+                        <div>
+                            <div>Hexagram ${originalHexagramIndex + 1}</div>
+                            <div class="hexagram">${originalHexagram}</div>
+                        </div>
+                        <div class="arrow">→</div>
+                        <div>
+                            <div>Hexagram ${transformedHexagramIndex + 1}</div>
+                            <div class="hexagram">${transformedHexagram}</div>
+                        </div>
+                    </div>
+                    <div class="changing-lines">Changing lines: ${changingLines.map(l => l + 1).join(", ")}</div>
+                `;
+            } else {
+                resultHTML = `
+                    <div class="hexagram-container">
+                        <div>
+                            <div>Hexagram ${originalHexagramIndex + 1}</div>
+                            <div class="hexagram">${originalHexagram}</div>
+                        </div>
+                    </div>
+                    <div class="changing-lines">No changing lines</div>
+                `;
+            }
+
+            document.getElementById('answer').innerHTML = resultHTML;
+        }
+    </script>
 </body>
 </html>
